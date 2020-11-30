@@ -1,11 +1,11 @@
 export default {
   colors: {
-    primary: '',
-    secondary: '',
-    light: '',
-    txtPrimary: '',
-    txtSecondary: '',
-    accent: '',
+    primary: '#15B051',
+    secondary: '#1E3B57',
+    light: '#DBDBDB',
+    txtPrimary: '#444444',
+    txtSecondary: 'white',
+    accent: '#EB4B7C',
   },
   breakpoints: {
     sm: 740,
