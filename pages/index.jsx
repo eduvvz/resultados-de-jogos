@@ -1,5 +1,5 @@
 import Navbar from '../components/UI/Navbar';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import { 
   ChampionshipWrapper, 
   Match, 
