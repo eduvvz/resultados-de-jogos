@@ -13,7 +13,6 @@ import {
 import { Container, Row, Col } from 'react-grid-system';
 import chromium from'chrome-aws-lambda';
 import puppeteer from 'puppeteer-core';
-import PCR from 'puppeteer-chromium-resolver';
 
 export default function Home({ championships = [] }) {
 
@@ -85,14 +84,11 @@ export default function Home({ championships = [] }) {
 export async function getStaticProps() {
   const isDev = !process.env.AWS_REGION
   console.log(await chromium.executablePath);
-  console.log(stats);
-  const stats = PCR.getStats();
-  const browser = await stats.puppeteer.launch({
-    headless: false,
-    args: ["--no-sandbox"],
-    executablePath: stats.executablePath
-  }).catch(function(error) {
-    console.log(error);
+  const browser = await puppeteer.launch({
+    args: isDev ? [] : chromium.args,
+    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : require('../utils/chrome.exe'),
+    headless: isDev ? true : chromium.headless,
+    ignoreHTTPSErrors: true,
   });
   //const browser = await puppeteer.launch();
   const page = await browser.newPage();
