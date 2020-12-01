@@ -12,6 +12,7 @@ import {
   Label,
 } from './styles';
 import { Container, Row, Col } from 'react-grid-system';
+import chromium from 'chrome-aws-lambda';
 
 export default function Home({ championships }) {
 
@@ -80,8 +81,15 @@ export default function Home({ championships }) {
   )
 }
 
+const isDev = !process.env.AWS_REGION;
+
 export async function getStaticProps() {
-  const browser = await puppeteer.launch();
+  
+  const browser = await chromium.puppeteer.launch({
+    args: isDev ? [] : chromium.args,
+    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : await chromium.executablePath,
+    headless: isDev ? true : chromium.headless,
+  });
   const page = await browser.newPage();
   await page.goto('https://globoesporte.globo.com/agenda/#/todos');
   await page.waitForSelector('.ScoreBoardTeamstyle__TeamInformation-sc-1xsoq6b-1');
