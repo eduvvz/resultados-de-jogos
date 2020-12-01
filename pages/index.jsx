@@ -12,6 +12,8 @@ import {
 } from './styles';
 import { Container, Row, Col } from 'react-grid-system';
 import chromium from'chrome-aws-lambda';
+import downloadChromium from 'download-chromium';
+
 
 export default function Home({ championships = [] }) {
 
@@ -82,12 +84,13 @@ export default function Home({ championships = [] }) {
 
 export async function getStaticProps() {
   const isDev = !process.env.AWS_REGION
+  const exec = await download()
   console.log(chromium.args);
   console.log(await chromium.executablePath);
   console.log(chromium.headless);
   const browser = await chromium.puppeteer.launch({
     args: isDev ? [] : chromium.args,
-    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : await chromium.executablePath,
+    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : exec,
     headless: isDev ? true : chromium.headless,
   });
   //const browser = await puppeteer.launch();
