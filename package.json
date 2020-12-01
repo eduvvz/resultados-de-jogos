@@ -17,6 +17,7 @@
     "fs": "^0.0.1-security",
     "net": "^1.0.2",
     "next": "10.0.3",
+    "puppeteer-chromium-resolver": "^5.2.0",
     "puppeteer-core": "5.3.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
