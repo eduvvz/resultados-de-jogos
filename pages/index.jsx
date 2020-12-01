@@ -82,11 +82,13 @@ export default function Home({ championships = [] }) {
 
 export async function getStaticProps() {
   const isDev = !process.env.AWS_REGION
-  console.log('isDEV:   '+isDev.toString());
+  console.log(chromium.args);
+  console.log(await chromium.executablePath);
+  console.log(chromium.headless);
   const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
+    args: isDev ? [] : chromium.args,
+    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : await chromium.executablePath,
+    headless: isDev ? true : chromium.headless,
   });
   //const browser = await puppeteer.launch();
   const page = await browser.newPage();
