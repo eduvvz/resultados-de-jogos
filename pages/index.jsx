@@ -84,7 +84,7 @@ export default function Home({ championships = [] }) {
 
 export async function getStaticProps() {
   const isDev = !process.env.AWS_REGION
-  const exec = await download()
+  const exec = await downloadChromium()
   console.log(chromium.args);
   console.log(await chromium.executablePath);
   console.log(chromium.headless);
