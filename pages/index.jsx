@@ -22,7 +22,7 @@ export default function Home({ championships }) {
         <Row>
           <Col sm={12}>
             <Description>
-              Saiba quem joga hoje nos principais campeonatos no mundo. Campeonatos como Premier Legue, Brasileirão Serie A, Brasileirão Serie B, LaLiga e Campeonato Italiano entre outros.
+              Saiba quem joga hoje nos principais campeonatos no mundo. Campeonatos como Premier Legue, Brasileirão Serie A, Brasileirão Serie B, LaLiga e Campeonato Italiano entre outros. Se mantenha atualizado com a gente!
             </Description>
           </Col>
         </Row>
