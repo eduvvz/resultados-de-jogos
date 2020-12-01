@@ -84,7 +84,6 @@ export default function Home({ championships = [] }) {
 
 export async function getStaticProps() {
   const isDev = !process.env.AWS_REGION
-  const stats = PCR.getStats();
   console.log(await chromium.executablePath);
   console.log(stats);
   const stats = PCR.getStats();
