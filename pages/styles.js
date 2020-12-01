@@ -22,6 +22,7 @@ export const Match = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 export const VersusIcon = styled.img`
@@ -46,4 +47,52 @@ export const TeamInfo = styled.div`
 export const ImageTeam = styled.img`
   width: 20px;
   margin: 0px 5px;
+`;
+
+export const Description = styled.p`
+  font-size: 14px;
+  margin: 20px 0px;
+  color: ${props => props.theme.colors.txtPrimary};
+`;
+
+export const Score = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 30px;
+  margin: 0px 5px;
+  border-radius: 4px;
+  background-color: ${props => props.theme.colors.secondary};
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+export const Label = styled.span`
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translate(0px, -50%);
+  color: ${props => {
+    if (props.type === 'Agora') {
+      return props.theme.colors.txtSecondary;
+    }
+
+    if (props.type === 'Encerrado') {
+      return props.theme.colors.light;
+    }
+
+    return props.theme.colors.txtPrimary;
+  }};
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 10px;
+  background-color: ${props => {
+    if (props.type === 'Agora') {
+      return props.theme.colors.primary;
+    }
+
+    return 'white';
+  }};
+  border-radius: 7px;
 `;
