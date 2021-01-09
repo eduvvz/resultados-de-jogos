@@ -23,6 +23,10 @@ export const Match = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+
+  @media (max-width: 960px) {
+    height: 80px;
+  }
 `;
 
 export const VersusIcon = styled.img`
@@ -41,6 +45,10 @@ export const TeamInfo = styled.div`
     color: ${props => props.theme.colors.txtPrimary};
     font-size: 14px;
     font-weight: 600;
+  }
+
+  @media (max-width: 960px) {
+    margin: 0px 5px 0px 10px;
   }
 `;
 
@@ -96,4 +104,8 @@ export const Label = styled.span`
     return 'white';
   }};
   border-radius: 7px;
+
+  @media (max-width: 960px) {
+    top: 10%;
+  }
 `;

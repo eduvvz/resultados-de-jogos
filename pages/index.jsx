@@ -11,8 +11,7 @@ import {
   Label,
 } from './styles';
 import { Container, Row, Col } from 'react-grid-system';
-import chromium from'chrome-aws-lambda';
-import puppeteer from 'puppeteer-core';
+import Axios from 'axios';
 
 export default function Home({ championships = [] }) {
 
@@ -82,65 +81,18 @@ export default function Home({ championships = [] }) {
 }
 
 export async function getStaticProps() {
-  const isDev = !process.env.AWS_REGION
-  console.log(await chromium.executablePath);
-  const browser = await puppeteer.launch({
-    args: isDev ? [] : chromium.args,
-    executablePath:  isDev ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : require('../utils/chrome.exe'),
-    headless: isDev ? true : chromium.headless,
-    ignoreHTTPSErrors: true,
-  });
-  //const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto('https://globoesporte.globo.com/agenda/#/todos');
-  await page.waitForSelector('.ScoreBoardTeamstyle__TeamInformation-sc-1xsoq6b-1');
-  const result = await page.evaluate(() => {
-    const championshipsEl = Array.from(document.querySelectorAll('.GroupByChampionshipsstyle__GroupBychampionshipsWrapper-sc-132ht2b-0'));
+  let result;
 
-    const championships = championshipsEl.map(el => {
-      const name = el.querySelectorAll('.GroupByChampionshipsstyle__ChampionshipName-sc-132ht2b-2')[0].textContent;
-
-      const gamesEl = Array.from(el.querySelectorAll('.Matchstyle__MatchCard-opmzko-1'));
-
-      const games = gamesEl.map(elgame => {
-        const teamsEl = elgame.querySelectorAll('.ScoreBoardTeamstyle__ScoreBoardCard-sc-1xsoq6b-0');
-        const headers = elgame.querySelector('.HeaderMatchstyle__HeaderMatchCard-sc-1gdixg6-0').getElementsByTagName('span');
-
-        const gols = [
-          teamsEl[0].querySelector('.gols'), 
-          teamsEl[1].querySelector('.gols'),
-        ];
-
-        return {
-          principalTeam: {
-            name: teamsEl[0].getElementsByTagName('span')[0].textContent || '',
-            img: teamsEl[0].getElementsByTagName('img')[0].src || '',
-            gols: gols[0] ? gols[0].textContent : null,
-          },
-          visitingTeam: {
-            name: teamsEl[1].getElementsByTagName('span')[0].textContent || '',
-            img: teamsEl[1].getElementsByTagName('img')[0].src || '',
-            gols: gols[1] ? gols[1].textContent : null,
-          },
-          round: elgame.querySelector('.Info-sc-15e0sq8-0').textContent,
-          hours: headers.length > 1 ? headers[1].textContent : 'Encerrado',
-        };
-      });
-
-      return {
-        name,
-        games,
-      };
-    })
-
-    return {
-      championships,
-    };
-  });
-
+  try {
+    const res = await Axios.get('https://us-central1-api-resultados-de-hoje.cloudfunctions.net/getGames');
+    result = res.data;
+  } catch (error) {
+    console.log(error.response);
+  }
+ 
   return {
     props: {
-      ...result,
+      ...result || {},
     },
     revalidate: 3000,
   }
